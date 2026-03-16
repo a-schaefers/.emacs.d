@@ -10,8 +10,8 @@
 (defmacro boot (&rest modules)
   `(progn
      ,@(mapcar
-        (lambda (module)
-          `(use-package ,module :load-path "lisp" :ensure nil :demand t))
+        (lambda (m)
+          `(use-package ,m :load-path "lisp" :ensure nil :demand t))
         modules)))
 
 (boot use-package-manager
