@@ -16,7 +16,6 @@
   :defer t
   :ensure t
   :init
-  (defalias 'pro 'projectile-commander)
   (setq projectile-project-search-path `((,my/projects . 1)))
   :hook (elpaca-after-init . projectile-mode)
   :bind (("C-c p" . projectile-command-map))
@@ -31,7 +30,6 @@
   :load-path "lib"
   :bind ("C-<return>" . better-shell-for-current-dir)
   :config
-  (defalias 'sh 'better-shell-for-current-dir)
   (setq comint-scroll-to-bottom-on-output t
         comint-scroll-show-maximum-output t))
 
