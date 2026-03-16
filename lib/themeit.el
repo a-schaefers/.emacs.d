@@ -24,13 +24,10 @@
 
 (defmacro themeit--elpaca-use-package (&rest specs)
   "Expand use-package declarations from SPECS. Requires elpaca + elpaca-use-package-mode.
-Each spec is either a bare symbol or (PACKAGE :ensure BOOL :init FORM :config FORM).
-:ensure defaults to t (fetch via elpaca). Set nil for builtins.
-If PACKAGE is a variable bound to a symbol, its value is used.
+
+  Example:
 
   (themeit--elpaca-use-package
-    (ef-themes :config
-               ((load-theme \\='ef-dream t)))
     (moody :config
            ((moody-replace-mode-line-front-space)
             (moody-replace-mode-line-buffer-identification)
@@ -72,7 +69,7 @@ If PACKAGE is a variable bound to a symbol, its value is used.
 (defvar themeit/font "Source Code Pro"
   "Font family name. Falls back to Monospace if unavailable.")
 (defvar themeit/font-size 150
-  "Font height in 1/10pt units (e.g. 150 = 15pt).")
+  "Font height (e.g. 150 = 15pt).")
 (defvar themeit/context-menu nil
   "When non-nil, enable right-click context menu.")
 (defvar themeit/startup-screen t
@@ -83,10 +80,10 @@ If PACKAGE is a variable bound to a symbol, its value is used.
   "Frame background opacity (0-100). Nil to disable.")
 (defvar themeit/line-numbers t
   "Enable line numbers in prog-mode. t for absolute, 'relative or 'visual.")
-(defvar themeit/theme 'modus-operandi
-  "Builtin theme to load on startup.")
 (defvar themeit/theme-builtin t
   "When non-nil, load the builtin theme specified by `themeit/theme'.")
+(defvar themeit/theme 'modus-operandi
+  "Builtin theme to load on startup.")
 (defvar themeit/hl-line t
   "When non-nil, highlight the current line.")
 (defvar themeit/blink-cursor t
