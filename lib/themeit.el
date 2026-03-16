@@ -148,8 +148,7 @@
   (tooltip-mode -1))
 
 (when themeit/frame-size
-  (add-to-list 'default-frame-alist `(width . ,themeit/frame-width))
-  (add-to-list 'default-frame-alist `(height . ,themeit/frame-height)))
+  (set-frame-size nil themeit/frame-width themeit/frame-height))
 
 (setq initial-major-mode themeit/scratch-mode)
 
