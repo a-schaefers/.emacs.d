@@ -15,7 +15,7 @@
 STRUCTURE
 ---------
 
-  early-init.el       disables package.el, sets theme/font/frame early (setq)
+  early-init.el       disables package.el, sets theme/font/frame early
   init.el             boot macro loads modules from lisp/
 
   modules:
@@ -63,18 +63,30 @@ EGLOT AUTOSTART
     lua-ts-mode     lua-language-server
 
 
-PAREDIT
--------
+SEXP EVERYWHERE
+----------------
 
-  Structural editing enabled for:
+  Paredit gives structural editing for lisps. treesit-sexp extends
+  the same navigation to all tree-sitter languages. The binds are
+  the same -- C-M-f/b/u/d work whether you are in Common Lisp or C.
+
+  Paredit enabled for:
 
     emacs-lisp  lisp  scheme
 
-  Default paredit binds:
-    C-M-f       paredit-forward
-    C-M-b       paredit-backward
-    C-M-u       paredit-backward-up
-    C-M-d       paredit-forward-down
+  treesit-auto installs grammars on demand and remaps all major modes
+  to their -ts-mode variants.
+
+  Shared binds (paredit in lisps, treesit-sexp elsewhere):
+    C-M-f       forward-sexp
+    C-M-b       backward-sexp
+    C-M-u       up / backward-up
+    C-M-d       down / forward-down
+    C-M-SPC     mark-sexp
+    C-M-a       beginning-of-defun
+    C-M-e       end-of-defun
+
+  Paredit-only (lisps):
     C-right     paredit-forward-slurp-sexp
     C-left      paredit-forward-barf-sexp
     M-(         paredit-wrap-round
@@ -82,23 +94,6 @@ PAREDIT
     M-S         paredit-split-sexp
     M-J         paredit-join-sexps
     M-r         paredit-raise-sexp
-
-
-TREE-SITTER
-------------
-
-  treesit-auto installs grammars on demand and remaps all major modes
-  to their -ts-mode variants. treesit-sexp gives sexp-style navigation
-  across all tree-sitter languages, not just lisps.
-
-  treesit-sexp binds:
-    C-M-f       forward-sexp
-    C-M-b       backward-sexp
-    C-M-u       up-list
-    C-M-d       down-list
-    C-M-SPC     mark-sexp
-    C-M-a       beginning-of-defun
-    C-M-e       end-of-defun
 
 
 KEYBINDS
@@ -128,9 +123,3 @@ KEYBINDS
     C-c d           duplicate line or region
     C-c D           duplicate and comment
     C-c k / C-c C-k kill whole line
-
-
-LANG OVERRIDES
---------------
-
-  C and C++ indent linux kernel style (tabs, width 8)
