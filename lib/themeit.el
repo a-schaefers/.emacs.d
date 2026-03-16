@@ -1,0 +1,160 @@
+;;; themeit.el --- Declarative Emacs UI configuration -*- lexical-binding: t; no-byte-compile: t; -*-
+
+;; Copyright (C) 2026 Adam Schaefers
+
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Configures builtin Emacs theming defaults, with an optional elpaca macro for 3rd party packages.
+;;
+
+;;; Code:
+
+(defmacro themeit--elpaca-use-package (&rest specs)
+  "Expand use-package declarations from SPECS. Requires elpaca + elpaca-use-package-mode.
+Each spec is either a bare symbol or (PACKAGE :ensure BOOL :init FORM :config FORM).
+:ensure defaults to t (fetch via elpaca). Set nil for builtins.
+If PACKAGE is a variable bound to a symbol, its value is used.
+
+  (themeit--elpaca-use-package
+    (ef-themes :config
+               ((load-theme \\='ef-dream t)))
+    (moody :config
+           ((moody-replace-mode-line-front-space)
+            (moody-replace-mode-line-buffer-identification)
+            (moody-replace-vc-mode)))
+    (minions :config
+             ((minions-mode 1))))"
+  (declare (indent defun))
+  `(progn
+     ,@(mapcar
+        (lambda (spec)
+          (let* ((pkg (if (consp spec) (car spec) spec))
+                 (props (if (consp spec) (cdr spec) '()))
+                 (pkg-sym
+                  (cond
+                   ((and (symbolp pkg) (boundp pkg) (symbolp (symbol-value pkg)))
+                    (symbol-value pkg))
+                   ((symbolp pkg) pkg)
+                   (t (error "Invalid package spec: %S" spec))))
+                 (ensure (if (plist-member props :ensure)
+                             (plist-get props :ensure)
+                           t))
+                 (ini (plist-get props :init))
+                 (cfg (plist-get props :config))
+                 (ini-forms (cond
+                             ((null ini) nil)
+                             ((and (listp ini) (listp (car ini))) ini)
+                             (t (list ini))))
+                 (cfg-forms (cond
+                             ((null cfg) nil)
+                             ((and (listp cfg) (listp (car cfg))) cfg)
+                             (t (list cfg)))))
+            `(use-package ,pkg-sym
+               :ensure ,ensure
+               ,@(when ini-forms `(:init ,@ini-forms))
+               ,@(when cfg-forms `(:config ,@cfg-forms)))))
+        specs)))
+
+;; Defaults
+(defvar themeit/font "Source Code Pro"
+  "Font family name. Falls back to Monospace if unavailable.")
+(defvar themeit/font-size 150
+  "Font height in 1/10pt units (e.g. 150 = 15pt).")
+(defvar themeit/context-menu nil
+  "When non-nil, enable right-click context menu.")
+(defvar themeit/startup-screen t
+  "When non-nil, show the startup screen.")
+(defvar themeit/kill-scratch t
+  "When non-nil, kill the *scratch* buffer on startup.")
+(defvar themeit/alpha-background 95
+  "Frame background opacity (0-100). Nil to disable.")
+(defvar themeit/line-numbers t
+  "Enable line numbers in prog-mode. t for absolute, 'relative or 'visual.")
+(defvar themeit/theme 'modus-operandi
+  "Builtin theme to load on startup.")
+(defvar themeit/theme-builtin t
+  "When non-nil, load the builtin theme specified by `themeit/theme'.")
+(defvar themeit/hl-line t
+  "When non-nil, highlight the current line.")
+(defvar themeit/blink-cursor t
+  "When non-nil, enable cursor blinking.")
+(defvar themeit/minimal-ui nil
+  "When non-nil, disable scroll-bar, fringe, menu-bar, tool-bar, and tooltips.")
+(defvar themeit/frame-size nil
+  "When non-nil, set initial frame dimensions via `themeit/frame-width' and `themeit/frame-height'.")
+(defvar themeit/frame-width 150
+  "Initial frame width in columns. Only used when `themeit/frame-size' is non-nil.")
+(defvar themeit/frame-height 40
+  "Initial frame height in lines. Only used when `themeit/frame-size' is non-nil.")
+(defvar themeit/scratch-mode 'lisp-interaction-mode
+  "Major mode for the *scratch* buffer.")
+(defvar themeit/silent-bell t
+  "When non-nil, silence the audible bell.")
+(defvar themeit/scroll-step 1
+  "Lines to scroll when point moves off-screen. Nil to disable.")
+
+(add-hook 'window-setup-hook
+          (lambda ()
+            (let ((height themeit/font-size))
+              (if (find-font (font-spec :name themeit/font))
+                  (set-face-attribute 'default nil :family themeit/font :height height)
+                (set-face-attribute 'default nil :family "Monospace" :height height)
+                (message "%s unavailable, falling back to Monospace" themeit/font)))))
+
+(context-menu-mode (if themeit/context-menu 1 -1))
+
+(setq inhibit-startup-screen (not themeit/startup-screen))
+
+(when themeit/kill-scratch
+  (add-hook 'window-setup-hook
+            (lambda () (when (get-buffer "*scratch*")
+                         (kill-buffer "*scratch*")))))
+
+(when themeit/alpha-background
+  (set-frame-parameter nil 'alpha-background themeit/alpha-background)
+  (add-to-list 'default-frame-alist `(alpha-background . ,themeit/alpha-background)))
+
+(when themeit/line-numbers
+  (setq display-line-numbers-type themeit/line-numbers)
+  (add-hook 'prog-mode-hook #'display-line-numbers-mode))
+
+(when (and themeit/theme-builtin themeit/theme)
+  (load-theme themeit/theme t))
+
+(global-hl-line-mode (if themeit/hl-line 1 -1))
+
+(blink-cursor-mode (if themeit/blink-cursor 1 -1))
+
+(when themeit/minimal-ui
+  (scroll-bar-mode -1)
+  (fringe-mode -1)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (tooltip-mode -1))
+
+(when themeit/frame-size
+  (add-to-list 'default-frame-alist `(width . ,themeit/frame-width))
+  (add-to-list 'default-frame-alist `(height . ,themeit/frame-height)))
+
+(setq initial-major-mode themeit/scratch-mode)
+
+(when themeit/silent-bell
+  (setq ring-bell-function 'ignore))
+
+(when themeit/scroll-step
+  (setq scroll-step themeit/scroll-step))
+
+(provide 'themeit)

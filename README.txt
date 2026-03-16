@@ -1,7 +1,7 @@
                           .emacs.d
                           --------
 
-  emacs-init-time 0.229322 seconds
+  emacs-init-time 0.198643 seconds
 
   everything is use-package wrapped and deferred
 

@@ -12,19 +12,9 @@
   ;; projects dir
   (defvar my/projects "~/repos")
 
-  ;; Font config with fallback
-  (defvar my/font "Aporetic Sans Mono")
-  (defvar my/font-size 150)
-  (defun my/setup-font ()
-    "Set up font with fallback to Monospace."
-    (let ((height my/font-size))
-      (if (find-font (font-spec :name my/font))
-          (set-face-attribute 'default nil :family my/font :height height)
-        (set-face-attribute 'default nil :family "Monospace" :height height)
-        (message "%s unavailable, falling back to Monospace" my/font))))
-
   :init
-  (context-menu-mode 1)
+
+  ;; standard recommendations from the Vertico README
   (setq enable-recursive-minibuffers t
         read-extended-command-predicate #'command-completion-default-include-p
         minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
@@ -49,9 +39,6 @@
   (set-terminal-coding-system 'utf-8)
   (set-keyboard-coding-system 'utf-8)
 
-  ;; Theme
-  (my/setup-font)
-
   (setq-default gnutls-verify-error t
                 gnutls-min-prime-bits 2048
                 password-cache-expiry nil
@@ -64,9 +51,7 @@
                 tramp-default-method "ssh"
                 tramp-copy-size-limit nil
                 vc-follow-symlinks t
-                ring-bell-function 'ignore
-                tab-always-indent 'complete
-                scroll-step 1)
+                tab-always-indent 'complete)
 
   (setq backup-directory-alist `((".*" . ,temporary-file-directory))
         auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
@@ -117,8 +102,7 @@
          ("<f5>"      . compile))
 
   :hook ((before-save . whitespace-cleanup)
-         (after-save  . executable-make-buffer-file-executable-if-script-p)
-         (prog-mode . display-line-numbers-mode))
+         (after-save  . executable-make-buffer-file-executable-if-script-p))
 
   :config
   (setq dired-guess-shell-alist-user '(("" "xdg-open &")))
