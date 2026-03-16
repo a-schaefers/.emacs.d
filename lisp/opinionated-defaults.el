@@ -14,12 +14,10 @@
 
   ;; Font config with fallback
   (defvar my/font "Aporetic Sans Mono")
-  (defvar my/font-size "15")
-  (defun my/font-size->height (size)
-    (round (* 10 (string-to-number size))))
+  (defvar my/font-size 150)
   (defun my/setup-font ()
     "Set up font with fallback to Monospace."
-    (let ((height (my/font-size->height my/font-size)))
+    (let ((height my/font-size))
       (if (find-font (font-spec :name my/font))
           (set-face-attribute 'default nil :family my/font :height height)
         (set-face-attribute 'default nil :family "Monospace" :height height)
@@ -105,7 +103,6 @@
   :bind (("C-c i"     . my/edit-init-file)
          :map global-map
          ;; Some window shortcuts
-         ("C-<tab>" . other-window)
          ("C-1" . delete-other-windows) ; C-x 1
          ("C-2" . split-window-below)   ; C-x 2
          ("C-3" . split-window-right)   ; C-x 3

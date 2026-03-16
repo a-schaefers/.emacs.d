@@ -15,7 +15,7 @@
   :defer t
   :preface
   (setq my/font "Aporetic Sans Mono"
-        my/font-size "15"
+        my/font-size 150
         my/projects "~/repos")
 
   ;; a wider Emacs window by default
