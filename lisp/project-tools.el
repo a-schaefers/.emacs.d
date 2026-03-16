@@ -10,14 +10,14 @@
   :after transient
   :commands (magit-status)
   :init
-  (setq magit-repository-directories `((,my-projects . 1))))
+  (setq magit-repository-directories `((,my/projects . 1))))
 
 (use-package projectile
   :defer t
   :ensure t
   :init
   (defalias 'pro 'projectile-commander)
-  (setq projectile-project-search-path `((,my-projects . 1)))
+  (setq projectile-project-search-path `((,my/projects . 1)))
   :hook (elpaca-after-init . projectile-mode)
   :bind (("C-c p" . projectile-command-map))
   :config

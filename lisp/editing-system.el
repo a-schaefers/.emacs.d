@@ -89,18 +89,18 @@
   :defer t
   :ensure nil
   :preface
-  (defvar my-eglot-autostart-langs nil
+  (defvar my/eglot-autostart-langs nil
     "Alist of (HOOK . SPEC) for automatic Eglot startup.
 Each SPEC may be a string (command), a list of strings (command and args),
 or (:override . CMD) to override `eglot-server-programs`.")
 
-  (defun my-apply-eglot-autostart (&optional table)
+  (defun my/apply-eglot-autostart (&optional table)
     "Register Eglot autostart hooks from TABLE (alist HOOK . SPEC).
-Falls back to `my-eglot-autostart-langs` if TABLE is nil,
+Falls back to `my/eglot-autostart-langs` if TABLE is nil,
 but only if that variable is bound."
     (dolist (pair (or table
-                      (and (boundp 'my-eglot-autostart-langs)
-                           my-eglot-autostart-langs)))
+                      (and (boundp 'my/eglot-autostart-langs)
+                           my/eglot-autostart-langs)))
       (let* ((hook (car pair))
              (spec (cdr pair))
              (mode (intern (string-remove-suffix "-hook" (symbol-name hook))))
@@ -129,13 +129,13 @@ but only if that variable is bound."
           (add-hook hook #'eglot-ensure)))))
 
   ;; Modes that will autostart the corresponding LSP server if found on PATH
-  (setq my-eglot-autostart-langs
+  (setq my/eglot-autostart-langs
         '((c-ts-mode-hook          . "clangd")
           (c++-ts-mode-hook        . "clangd")
           (lua-ts-mode-hook        . "lua-language-server")))
 
   :init
-  (my-apply-eglot-autostart))
+  (my/apply-eglot-autostart))
 
 ;; Editing / Convenience
 

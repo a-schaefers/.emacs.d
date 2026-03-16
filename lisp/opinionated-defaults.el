@@ -4,26 +4,26 @@
   :ensure nil
   :defer t
   :preface
-  (defun my-edit-init-file ()
+  (defun my/edit-init-file ()
     "Open init.el."
     (interactive)
     (find-file (expand-file-name "init.el" user-emacs-directory)))
 
   ;; projects dir
-  (defvar my-projects "~/repos")
+  (defvar my/projects "~/repos")
 
   ;; Font config with fallback
-  (defvar my-font "Aporetic Sans Mono")
-  (defvar my-font-size "15")
-  (defun my--font-size->height (size)
+  (defvar my/font "Aporetic Sans Mono")
+  (defvar my/font-size "15")
+  (defun my/font-size->height (size)
     (round (* 10 (string-to-number size))))
-  (defun my-setup-font ()
+  (defun my/setup-font ()
     "Set up font with fallback to Monospace."
-    (let ((height (my--font-size->height my-font-size)))
-      (if (find-font (font-spec :name my-font))
-          (set-face-attribute 'default nil :family my-font :height height)
+    (let ((height (my/font-size->height my/font-size)))
+      (if (find-font (font-spec :name my/font))
+          (set-face-attribute 'default nil :family my/font :height height)
         (set-face-attribute 'default nil :family "Monospace" :height height)
-        (message "%s unavailable, falling back to Monospace" my-font))))
+        (message "%s unavailable, falling back to Monospace" my/font))))
 
   :init
   (context-menu-mode 1)
@@ -52,7 +52,7 @@
   (set-keyboard-coding-system 'utf-8)
 
   ;; Theme
-  (my-setup-font)
+  (my/setup-font)
 
   (setq-default gnutls-verify-error t
                 gnutls-min-prime-bits 2048
@@ -102,7 +102,7 @@
   (read-extended-command-predicate #'command-completion-default-include-p)
 
   ;; Some global binds
-  :bind (("C-c i"     . my-edit-init-file)
+  :bind (("C-c i"     . my/edit-init-file)
          :map global-map
          ;; Some window shortcuts
          ("C-<tab>" . other-window)
@@ -134,13 +134,6 @@
 
   ;; Start Emacs server
   (require 'server)
-  (unless (server-running-p) (server-start))
-
-  ;; I like the startup screen
-  (setq inhibit-startup-screen nil)
-
-  ;; Kill scratch buffer
-  (when (get-buffer "*scratch*")
-    (kill-buffer "*scratch*")))
+  (unless (server-running-p) (server-start)))
 
 (provide 'opinionated-defaults)
