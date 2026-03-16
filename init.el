@@ -60,24 +60,13 @@
            (moody-replace-mode-line-buffer-identification)
            (moody-replace-vc-mode)))
 
-   ;; To hide minor modes
+   ;; Uncluttering the modeline
    (minions :config
             ((minions-mode 1)))
 
-   ;; Spacemacs Modeline
-   ;; (spaceline :config
-   ;;            ((require 'spaceline-config)
-   ;;             (spaceline-toggle-minor-modes-on)
-   ;;             (spaceline-emacs-theme)))
-
-   ;; Doom Modeline, and the icons it needs
-   ;; nerd-icons ; ++ M-x nerd-icons-install-fonts once
-   ;; (doom-modeline :init
-   ;;                ((setq doom-modeline-minor-modes t
-   ;;                       doom-modeline-height 32
-   ;;                       doom-modeline-bar-width 4))
-   ;;                :config
-   ;;                ((doom-modeline-mode 1)))
-   ))
+   ;; Nerd icons in dired
+   nerd-icons ; M-x nerd-icons-install-fonts once
+   (nerd-icons-dired :config
+                     ((add-hook 'dired-mode-hook #'nerd-icons-dired-mode)))))
 
 ;;; init.el ends here
