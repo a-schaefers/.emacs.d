@@ -3,13 +3,13 @@
 
   emacs-init-time 0.229322 seconds
 
-  Everything is use-package wrapped and deferred
+  everything is use-package wrapped and deferred
 
-  Prefers builtins over external packages
+  prefers builtins over external packages
 
-  Tries to unify binds between non-lisps and lisps
+  tries to unify binds between non-lisps and lisps
 
-  Gives a "modern" experience albeit the Emacs-way of doing it
+  gives a "modern" experience albeit the Emacs-way of doing it
 
 
 STRUCTURE
@@ -18,7 +18,7 @@ STRUCTURE
   early-init.el       disables package.el, sets theme/font/frame early (setq)
   init.el             boot macro loads modules from lisp/
 
-  Modules:
+  modules:
 
     use-package-manager     elpaca bootstrap
     set-env-path            env vars and PATH
@@ -27,34 +27,6 @@ STRUCTURE
     project-tools           transient, magit, projectile, better-shell-lite, eat
     editing-system          corfu, treesit-auto, flymake, eglot, paredit, treesit-sexp, slime, crux
     lang-overrides          per-language style overrides
-
-
-PACKAGES
---------
-
-  elpaca                  async package manager
-  vertico                 minibuffer completion
-  orderless               fuzzy/regexp matching for completion
-  savehist                persist minibuffer history (builtin)
-  corfu                   in-buffer completion popup
-  treesit-auto            auto-install and use tree-sitter grammars
-  treesit-sexp            treat all code like lisp (sexp nav everywhere)
-  eglot                   LSP client (builtin)
-  flymake                 diagnostics (builtin)
-  paredit                 structural editing for all lisps
-  slime                   superior lisp interaction mode (sbcl)
-  crux                    incredibly useful extensions
-  magit, transient        git porcelain & newer transient (builtin currently is a no-go for magit)
-  projectile              project management
-  eat                     terminal emulator
-  better-shell-lite       M-x shell wrapper to auto 'cd' to the emacs PWD
-
-
-COMPLETION
-----------
-
-  Minibuffer:  vertico + orderless (basic first, then fuzzy fallback)
-  In-buffer:   corfu (auto popup after 3 chars, no delay)
 
 
 LSP / SLIME UNIFICATION
@@ -135,7 +107,7 @@ KEYBINDS
   C-c i           edit init.el
   F5              compile
   C-<return>      shell in current dir (better-shell-lite)
-  s-<return>      eat terminal
+  C-S-<return>    eat terminal
   C-c p           projectile prefix
 
   Window management:
@@ -162,20 +134,3 @@ LANG OVERRIDES
 --------------
 
   C and C++ indent linux kernel style (tabs, width 8)
-
-
-DEFAULTS
---------
-
-  font            Aporetic Sans Mono 15 (fallback: Monospace)
-  theme           modus-vivendi
-  projects dir    ~/repos
-  indent          spaces, fill-column 79
-  coding          utf-8 everywhere
-  server          emacs server auto-starts
-  save-place      remembers cursor position
-  electric-pair   auto-close parens/brackets
-  whitespace      cleaned on save
-  scripts         auto-chmod +x on save
-
-  kills *scratch*, keeps the startup screen.
