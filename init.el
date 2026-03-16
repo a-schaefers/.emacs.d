@@ -47,7 +47,7 @@
         themeit/silent-bell t
         themeit/scroll-step 1)
   :config
-  ;; 3rd party packages
+  ;; 3rd party packages (requires elpaca + elpaca-use-package-mode)
 
   ;; Some nice themes from creator of Aporetic fonts
   (themeit--elpaca-use-package
