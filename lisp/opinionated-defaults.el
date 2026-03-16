@@ -51,7 +51,8 @@
                 tramp-default-method "ssh"
                 tramp-copy-size-limit nil
                 vc-follow-symlinks t
-                tab-always-indent 'complete)
+                tab-always-indent 'complete
+                browse-url-browser-function 'eww-browse-url)
 
   (setq backup-directory-alist `((".*" . ,temporary-file-directory))
         auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
