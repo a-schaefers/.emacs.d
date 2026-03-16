@@ -60,7 +60,7 @@
            (moody-replace-mode-line-buffer-identification)
            (moody-replace-vc-mode)))
 
-   ;; Uncluttering the modeline
+   ;; Unclutter the modeline
    (minions :config
             ((minions-mode 1)))
 
