@@ -11,6 +11,8 @@
 
   gives a "modern" experience albeit the Emacs-way of doing it
 
+  does not frik with AI
+
 
 STRUCTURE
 ---------
