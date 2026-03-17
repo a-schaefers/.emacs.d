@@ -9,9 +9,6 @@
     (interactive)
     (find-file (expand-file-name "init.el" user-emacs-directory)))
 
-  ;; projects dir
-  (defvar my/projects "~/repos")
-
   :init
 
   ;; OPINIONATED DEFAULTS
