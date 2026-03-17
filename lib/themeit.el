@@ -22,53 +22,10 @@
 
 ;;; Commentary:
 ;;
-;; Configures builtin Emacs theming defaults, with an optional elpaca macro for 3rd party packages.
+;; Configures builtin Emacs theming defaults.
 ;;
 
 ;;; Code:
-
-(defmacro themeit--elpaca-use-package (&rest specs)
-  "Expand use-package declarations from SPECS. Requires elpaca + elpaca-use-package-mode.
-
-  Example:
-
-  (themeit--elpaca-use-package
-    (moody :config
-           ((moody-replace-mode-line-front-space)
-            (moody-replace-mode-line-buffer-identification)
-            (moody-replace-vc-mode)))
-    (minions :config
-             ((minions-mode 1))))"
-  (declare (indent defun))
-  `(progn
-     ,@(mapcar
-        (lambda (spec)
-          (let* ((pkg (if (consp spec) (car spec) spec))
-                 (props (if (consp spec) (cdr spec) '()))
-                 (pkg-sym
-                  (cond
-                   ((and (symbolp pkg) (boundp pkg) (symbolp (symbol-value pkg)))
-                    (symbol-value pkg))
-                   ((symbolp pkg) pkg)
-                   (t (error "Invalid package spec: %S" spec))))
-                 (ensure (if (plist-member props :ensure)
-                             (plist-get props :ensure)
-                           t))
-                 (ini (plist-get props :init))
-                 (cfg (plist-get props :config))
-                 (ini-forms (cond
-                             ((null ini) nil)
-                             ((and (listp ini) (listp (car ini))) ini)
-                             (t (list ini))))
-                 (cfg-forms (cond
-                             ((null cfg) nil)
-                             ((and (listp cfg) (listp (car cfg))) cfg)
-                             (t (list cfg)))))
-            `(use-package ,pkg-sym
-               :ensure ,ensure
-               ,@(when ini-forms `(:init ,@ini-forms))
-               ,@(when cfg-forms `(:config ,@cfg-forms)))))
-        specs)))
 
 ;; Defaults
 (defvar themeit/font "Source Code Pro"
