@@ -8,7 +8,10 @@
   (setq my/env '((EDITOR . "emacsclient")
                  (VISUAL . "$EDITOR")
                  (PAGER  . "cat")))
-  (setq my/path-insert '("~/bin"))
+  (setq my/path-insert '("~/bin"
+                         "~/.local/bin"
+                         "~/.cargo/bin"
+                         "~/go/bin"))
   (setq my/path-append '()))
 
 (provide 'set-env-path)
