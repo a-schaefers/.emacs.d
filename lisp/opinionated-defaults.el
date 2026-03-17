@@ -1,5 +1,7 @@
 ;;; -*- lexical-binding: t; no-byte-compile: t; -*-
 
+;; OPINIONATED DEFAULTS
+
 (use-package emacs
   :ensure nil
   :defer t
@@ -11,7 +13,7 @@
 
   :init
 
-  ;; OPINIONATED DEFAULTS
+  ;; perf
   (setq load-prefer-newer t
         gc-cons-threshold 100000000
         read-process-output-max (* 1024 1024)
@@ -55,7 +57,6 @@
   (setq-default indent-tabs-mode nil
                 fill-column 79)
 
-  ;; Set default compile command, for M-x cc
   (setq compile-command "make -k ")
 
   ;; Some global binds
