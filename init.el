@@ -21,6 +21,7 @@
       completion-minibuffer
       project-tools
       editing-system
-      lang-overrides)
+      lang-overrides
+      comms)
 
 ;;; init.el ends here
