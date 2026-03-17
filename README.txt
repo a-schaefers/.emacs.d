@@ -49,9 +49,13 @@ LSP / SLIME UNIFICATION
     M-,           xref-go-back
     M-?           xref-find-references
     C-c C-d d     eldoc-doc-buffer
-    C-c C-d C-d   eldoc-doc-buffer
+    C-c C-d C-d   eldoc snapshot in new frame (persists for extended reading sessions)
     C-c !         flymake diagnostics
     C-c C-r       eglot-rename
+
+  C/C++ only (requires pacman -S man-pages):
+    C-c C-d m     man page for symbol at point
+    C-c C-d C-m   man page in new frame (persists for extended reading sessions)
 
 
 EGLOT AUTOSTART
@@ -60,9 +64,23 @@ EGLOT AUTOSTART
   Opening a file auto-starts eglot if the LSP server binary is on PATH.
   Currently configured:
 
-    c-ts-mode       clangd
-    c++-ts-mode     clangd
-    lua-ts-mode     lua-language-server
+    c-ts-mode           clangd
+    c++-ts-mode         clangd
+    lua-ts-mode         lua-language-server
+    bash-ts-mode        bash-language-server
+    python-ts-mode      pylsp
+    go-ts-mode          gopls
+    rust-ts-mode        rust-analyzer (+ clippy if cargo-clippy on PATH)
+    ruby-ts-mode        solargraph
+    elixir-ts-mode      elixir-ls
+    html-ts-mode        vscode-html-language-server
+    css-ts-mode         vscode-css-language-server
+    typescript-ts-mode  typescript-language-server
+    js-ts-mode          typescript-language-server
+    yaml-ts-mode        yaml-language-server
+    json-ts-mode        vscode-json-language-server
+    java-ts-mode        jdtls
+    csharp-ts-mode      omnisharp
 
 
 SEXP EVERYWHERE
