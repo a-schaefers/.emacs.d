@@ -57,8 +57,7 @@
 (use-package nerd-icons-dired
   :ensure t
   :demand t
-  :config
-  (add-hook 'dired-mode-hook #'nerd-icons-dired-mode))
+  :hook (dired-mode . nerd-icons-dired-mode))
 
 ;; Startup dashboard
 (use-package dashboard
@@ -98,9 +97,8 @@
                 (lambda (&rest _) (info-emacs-manual)))
            (nil "Elisp Intro" "Official elisp intro"
                 (lambda (&rest _) (browse-url "https://www.gnu.org/software/emacs/manual/html_node/eintr/index.html"))))))
-  :config
-  (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
-  (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
-  (add-hook 'elpaca-after-init-hook #'dashboard-setup-startup-hook))
+  :hook ((elpaca-after-init . dashboard-initialize)
+         (elpaca-after-init . dashboard-insert-startupify-lists)
+         (elpaca-after-init . dashboard-setup-startup-hook)))
 
 (provide 'theme)
