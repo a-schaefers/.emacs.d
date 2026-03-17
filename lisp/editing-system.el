@@ -57,7 +57,34 @@
 (use-package eglot
   :defer t
   :ensure nil
-  :init (setq eglot-ignored-server-capabilities '(:inlayHintProvider)) ; disable inlay hints
+  :preface
+  (defun my/eldoc-frame--snapshot ()
+    "Snapshot *eldoc* into a new buffer and display in a new frame."
+    (let ((buf (get-buffer "*eldoc*")))
+      (when buf
+        (let* ((snap (generate-new-buffer "*eldoc-snapshot*"))
+               (frame (make-frame '((name . "eldoc")))))
+          (with-current-buffer snap
+            (insert (with-current-buffer buf (buffer-string)))
+            (goto-char (point-min)))
+          (select-frame-set-input-focus frame)
+          (set-window-buffer (frame-selected-window frame) snap)))))
+  (defun my/eldoc-frame ()
+    "Snapshot *eldoc* into a pinned buffer and display in a new frame."
+    (interactive)
+    (if (get-buffer "*eldoc*")
+        (my/eldoc-frame--snapshot)
+      (call-interactively #'eldoc-print-current-symbol-info)
+      (run-with-timer 0.5 nil #'delete-other-windows)
+      (run-with-timer 0.5 nil #'my/eldoc-frame--snapshot)))
+  :init
+  (setq eglot-ignored-server-capabilities '(:inlayHintProvider)) ; disable inlay hints
+  :config
+  (when (and (executable-find "rust-analyzer")
+             (executable-find "cargo-clippy"))
+    (add-to-list 'eglot-server-programs
+                 '(rust-ts-mode . ("rust-analyzer" :initializationOptions
+                                   (:check (:command "clippy"))))))
   :bind (:map eglot-mode-map
               ("M-."     . xref-find-definitions)
               ("M-,"     . xref-go-back)
@@ -65,7 +92,7 @@
 
               ;; SLIME-consistent help
               ("C-c C-d d"   . eldoc-doc-buffer)
-              ("C-c C-d C-d" . eldoc-doc-buffer)
+              ("C-c C-d C-d" . my/eldoc-frame)
 
               ;; Diagnostics = summon-only
               ("C-c !"   . my/show-flymake-diagnostics)
@@ -80,7 +107,7 @@
   :ensure t
   :init
   ;; emacs lisp
-  (add-hook 'emacs-lisp-mode-hook        #'enable-paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook         #'enable-paredit-mode)
   (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
   (add-hook 'ielm-mode-hook               #'enable-paredit-mode)
   ;; lisp
