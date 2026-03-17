@@ -22,8 +22,19 @@
 
 ;;; Commentary:
 ;;
-;; Minimal Emacs ENV and PATH management that keeps exec-path in sync.
-;; Useful for those who want to manage Emacs path and env without playing in .bashrc or .bash_profile.
+;; Example
+;; (use-package env-manager
+;;   :load-path "lib"
+;;   :ensure nil
+;;   :demand t
+;;   :init
+;;   (setq my/env '((EDITOR . "emacsclient")
+;;                  (VISUAL . "$EDITOR")
+;;                  (PAGER  . "cat")))
+;;   (setq my/path-insert '("~/bin"))
+;;   (setq my/path-append '())
+;;   :config
+;;   (my/apply-env-and-path))
 ;;
 
 ;;; Code:
