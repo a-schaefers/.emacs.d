@@ -5,7 +5,7 @@
 
   everything is use-package wrapped and deferred
 
-  prefers builtins over external packages
+  prefers builtins over external packages (eglot > lsp-mode, flymake > flycheck, etc.)
 
   tries to unify binds between non-lisps and lisps
 
