@@ -22,7 +22,30 @@
 
 ;;; Commentary:
 ;;
-;; Configures builtin Emacs theming defaults.
+;; Example
+;; (use-package themeit
+;;   :load-path "lib"
+;;   :ensure nil
+;;   :demand t
+;;   :init
+;;   (setq themeit/font "Aporetic Sans Mono"
+;;         themeit/font-size 130
+;;         themeit/theme-builtin nil
+;;         ;; themeit/theme 'modus-operandi
+;;         themeit/alpha-background 95
+;;         themeit/startup-screen nil
+;;         themeit/kill-scratch t
+;;         themeit/line-numbers nil
+;;         themeit/hl-line t
+;;         themeit/blink-cursor t
+;;         themeit/context-menu nil
+;;         themeit/minimal-ui t
+;;         themeit/frame-size t
+;;         themeit/frame-width 150
+;;         themeit/frame-height 40
+;;         themeit/scratch-mode 'fundamental-mode
+;;         themeit/silent-bell t
+;;         themeit/scroll-step 1))
 ;;
 
 ;;; Code:
