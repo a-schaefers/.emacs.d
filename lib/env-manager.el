@@ -32,9 +32,7 @@
 ;;                  (VISUAL . "$EDITOR")
 ;;                  (PAGER  . "cat")))
 ;;   (setq my/path-insert '("~/bin"))
-;;   (setq my/path-append '())
-;;   :config
-;;   (my/apply-env-and-path))
+;;   (setq my/path-append '()))
 ;;
 
 ;;; Code:
@@ -67,5 +65,7 @@
     (add-to-list 'exec-path (expand-file-name item) t))
 
   (setenv "PATH" (string-trim-right (string-join exec-path ":") ":$")))
+
+(my/apply-env-and-path)
 
 (provide 'env-manager)

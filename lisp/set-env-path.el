@@ -9,8 +9,6 @@
                  (VISUAL . "$EDITOR")
                  (PAGER  . "cat")))
   (setq my/path-insert '("~/bin"))
-  (setq my/path-append '())
-  :config
-  (my/apply-env-and-path))
+  (setq my/path-append '()))
 
 (provide 'set-env-path)

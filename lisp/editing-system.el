@@ -88,10 +88,7 @@
 (use-package eglot-autostart-when-on-path
   :load-path "lib"
   :ensure nil
-  :defer t
-  :commands (my/apply-eglot-autostart)
-  :init
-  (my/apply-eglot-autostart))
+  :demand t)
 
 ;; Editing / Convenience
 

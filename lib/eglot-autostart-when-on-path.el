@@ -26,10 +26,7 @@
 ;; (use-package eglot-autostart-when-on-path
 ;;   :load-path "lib"
 ;;   :ensure nil
-;;   :defer t
-;;   :commands (my/apply-eglot-autostart)
-;;   :init
-;;   (my/apply-eglot-autostart))
+;;   :demand t)
 
 ;;; Code:
 
@@ -88,5 +85,7 @@ but only if that variable is bound."
           (add-to-list 'eglot-server-programs (cons mode cmd))))
       (when (and cmd (executable-find (car cmd)))
         (add-hook hook #'eglot-ensure)))))
+
+(my/apply-eglot-autostart)
 
 (provide 'eglot-autostart-when-on-path)
