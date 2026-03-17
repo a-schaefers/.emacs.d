@@ -14,12 +14,6 @@
 
   :init
 
-  ;; standard recommendations from the Vertico README
-  (setq enable-recursive-minibuffers t
-        read-extended-command-predicate #'command-completion-default-include-p
-        minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
-  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
-
   ;; OPINIONATED DEFAULTS
   (setq load-prefer-newer t
         gc-cons-threshold 100000000
@@ -66,24 +60,6 @@
 
   ;; Set default compile command, for M-x cc
   (setq compile-command "make -k ")
-
-  :custom
-  ;; A few more useful configurations...
-  ;; TAB cycle if there are only few candidates
-  ;; (completion-cycle-threshold 3)
-
-  ;; Enable indentation+completion using the TAB key.
-  ;; `completion-at-point' is often bound to M-TAB.
-  (tab-always-indent 'complete)
-
-  ;; Emacs 30 and newer: Disable Ispell completion function.
-  ;; Try `cape-dict' as an alternative.
-  (text-mode-ispell-word-completion nil)
-
-  ;; Hide commands in M-x which do not apply to the current mode.  Corfu
-  ;; commands are hidden, since they are not used via M-x. This setting is
-  ;; useful beyond Corfu.
-  (read-extended-command-predicate #'command-completion-default-include-p)
 
   ;; Some global binds
   :bind (("C-c i"     . my/edit-init-file)
