@@ -132,7 +132,21 @@ but only if that variable is bound."
   (setq my/eglot-autostart-langs
         '((c-ts-mode-hook          . "clangd")
           (c++-ts-mode-hook        . "clangd")
-          (lua-ts-mode-hook        . "lua-language-server")))
+          (lua-ts-mode-hook        . "lua-language-server")
+          (bash-ts-mode-hook       . "bash-language-server")
+          (python-ts-mode-hook     . "pylsp")
+          (go-ts-mode-hook         . "gopls")
+          (rust-ts-mode-hook       . "rust-analyzer")
+          (ruby-ts-mode-hook       . "solargraph")
+          (elixir-ts-mode-hook     . (:override "elixir-ls"))
+          (html-ts-mode-hook       . "vscode-html-language-server")
+          (css-ts-mode-hook        . "vscode-css-language-server")
+          (typescript-ts-mode-hook . "typescript-language-server")
+          (js-ts-mode-hook         . "typescript-language-server")
+          (yaml-ts-mode-hook       . "yaml-language-server")
+          (json-ts-mode-hook       . "vscode-json-language-server")
+          (java-ts-mode-hook       . "jdtls")
+          (csharp-ts-mode-hook     . "omnisharp")))
 
   :init
   (my/apply-eglot-autostart))
