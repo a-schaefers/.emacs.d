@@ -22,6 +22,7 @@
       project-tools
       editing-system
       lang-overrides
-      comms)
+      comms
+      media)
 
 ;;; init.el ends here

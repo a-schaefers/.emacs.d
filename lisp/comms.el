@@ -1,7 +1,10 @@
 ;;; comms.el --- M-x wl, M-x irc -*- lexical-binding: t; no-byte-compile: t; -*-
 
-;; Email (Wanderlust)
+;; Email (Wanderlust) setup for apple mail with custom reply-to
 (use-package wl
+  ;; ~/.authinfo
+  ;; machine imap.mail.me.com login USERNAME port 993 password PASSWORD
+  ;; machine smtp.mail.me.com login USERNAME@icloud.com port 587 password PASSWORD
   :ensure wanderlust
   :defer t
   :init
@@ -39,6 +42,8 @@
 
 ;; IRC (rcirc)
 (use-package rcirc
+  ;; ~/.authinfo
+  ;; machine irc.libera.chat login USERNAME port 6697 password PASSWORD
   :defer t
   :ensure nil
   :custom
